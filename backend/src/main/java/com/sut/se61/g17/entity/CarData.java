@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Data
@@ -14,8 +17,17 @@ public class CarData {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="carData_seq")
     @Column(name="carDataID",unique = true, nullable = false)
     private @NonNull Long carID;
-    private @NonNull String model;
-    private @NonNull String cC;
+
+    @NotNull
+    @Size(min = 3,max = 15)
+    @Column(unique = true)
+    private String model;
+
+    @NotNull
+    @Size(min = 4,max = 10)
+    @Pattern(regexp = "^[1-9][0-9]*cc$") // ขึ้นต้นด้วยตัวใหญ่เสมอแล้วตามด้วยอักษรตัวเล็กจะมีก็ได้ไม่มีก็ได้
+
+    private String cC;
 
 
 
